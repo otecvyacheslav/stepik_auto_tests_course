@@ -36,6 +36,7 @@ class Test_input_login_password:
 
 class Test_Page_рабочий_стол(Test_input_login_password):
     def test_page_неснижаемые_остатки(self, browser):
+        dsda
         
 class TestPageZMK(Test_input_login_password):
     def test_zmk_page(self, browser):
