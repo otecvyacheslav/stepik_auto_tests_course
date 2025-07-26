@@ -8,7 +8,7 @@ from asd import login_stepik
 from asd import password_stepik
 import math
 
-answer = math.log(int(time.time() + 1))
+answer = math.log(int(time.time() + 0.2))
 
 # browser идет из conftest.py
 # логин и пароль хранится отдельно
@@ -17,7 +17,7 @@ answer = math.log(int(time.time() + 1))
 @pytest.mark.parametrize(
     "links",
     [
-        "https://stepik.org/lesson/236895/step/1"
+        "https://stepik.org/lesson/236895/step/1",
         # "https://stepik.org/lesson/236896/step/1",
         # "https://stepik.org/lesson/236897/step/1",
         # "https://stepik.org/lesson/236898/step/1",
@@ -47,14 +47,16 @@ def test_open_stepik(browser, links):
 
     print("нажатие на вход в аккаунт")
     browser.find_element(By.CSS_SELECTOR, "[type='submit']").click()
-    time.sleep(3)
+    # time.sleep(3)
 
+    
     print("очистка поля ввода")
+    time.sleep(100)
     browser.find_element(By.CLASS_NAME, "ember-text-area").clear()
 
-    time.sleep(1)
     print("ввод вычисленного значения из указанного времени")
-    browser.find_element(By.CLASS_NAME, "ember-text-area").send_keys(answer)
+    browser.find_element(By.CLASS_NAME, "ember-text-area").send_keys(str(answer))
+    # time.sleep(5)
 
     print("нажатие на отправить, вот тут идет ожидание, пока кнопка станет доступна")
     send_answer = browser.find_element(By.CLASS_NAME, "submit-submission")
@@ -64,14 +66,18 @@ def test_open_stepik(browser, links):
     # )
 
     send_answer.click()
+    time.sleep(5)
 
     print("проверяю полученный ответ, равен ли он ожиданию")
-    message = browser.find_element(By.CLASS_NAME, "smart-hints__hint")
-    text_in_message = message.text
+    message = browser.find_element(By.CSS_SELECTOR, "#ember541 > p")
+    # text_in_message = message.text
 
     print("прям перед ассертом")
-    time.sleep(15)
+    rly_text = "Correct!"
 
-    assert (
-        text_in_message == "Correct!"
-    ), f"Сообщение в {text_in_message} не содержит Correct!"
+    assert message == rly_text, f"Сообщение в {message} не содержит Correct!"
+
+
+# <button class="again-btn white" type="button" data-ember-action="" data-ember-action-555="555">
+#                   Решить снова
+# <!---->                </button>
