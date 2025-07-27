@@ -13,10 +13,10 @@ def test_open_stepik(browser):
     # time.sleep(100)
 
     login_enter = browser.find_element(By.ID, "id_login_email")
-    login_enter.send_keys("vsvoropaev@rambler.ru")
+    login_enter.send_keys("___")
     
     password_enter = browser.find_element(By.ID, "id_login_password")
-    password_enter.send_keys("merygold143A")
+    password_enter.send_keys("___")
 
     browser.find_element(By.CSS_SELECTOR, "[type='submit']").click()
     # time.sleep(3)
